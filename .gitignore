@@ -49,4 +49,7 @@ venv/
 # OS files
 .DS_Store
 
-server/app.ipynb
+notebooks
+data
+logs
+*.egg-info

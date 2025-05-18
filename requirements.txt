@@ -1,0 +1,13 @@
+# This file is used to install the required packages for the server.
+streamlit
+easyocr
+langchain
+langchain-google-genai
+pydantic
+plotly
+pandas
+python-dotenv
+pymupdf
+
+
+-e .
