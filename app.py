@@ -8,6 +8,8 @@ import plotly.express as px
 from src.llm.agent import graph
 import fitz
 import pathlib
+import sys
+import asyncio
 
 from src.utils.logger import logging
 from src.utils.exception_handler import CustomException
@@ -51,7 +53,7 @@ if uploaded_file and analyze:
     try:
         logging.info("File uploaded: %s", uploaded_file.name)
         with st.spinner("Running LangGraph for extraction and analysis..."):
-            result = graph.invoke({"input": extracted_text})
+            result = asyncio.run(graph.ainvoke({"input": extracted_text}))
         logging.info("Graph analysis completed.")
 
         extracted_data = result.get("extracted_data")
