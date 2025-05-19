@@ -7,6 +7,7 @@ import pandas as pd
 import plotly.express as px
 from src.llm.agent import graph
 import fitz
+import pathlib
 
 from src.utils.logger import logging
 from src.utils.exception_handler import CustomException
@@ -26,9 +27,9 @@ with st.sidebar:
     uploaded_file = st.file_uploader("Upload your bank statement image", type=["jpg", "jpeg", "png", "pdf"])
 
     if uploaded_file:
-        file_type = uploaded_file.type
+        file_extension = pathlib.Path(uploaded_file.name).suffix.lower()
 
-        if file_type == "application/pdf":
+        if file_extension == ".pdf":
             st.info("PDF uploaded.")
             analyze = st.button("Analyze PDF")
             if analyze:
@@ -49,13 +50,7 @@ with st.sidebar:
 
 if uploaded_file and analyze:
     try:
-        if not extracted_text or not extracted_text.strip():
-            st.error("No text could be extracted from the uploaded file. Please upload a valid bank statement.")
-            logging.error("No text extracted from file.")
-            st.stop()
-
-        logging.info("Invoking graph with input: %s", extracted_text[:500])
-
+        logging.info("File uploaded: %s", uploaded_file.name)
         with st.spinner("Running LangGraph for extraction and analysis..."):
             result = graph.invoke({"input": extracted_text})
         logging.info("Graph analysis completed.")
