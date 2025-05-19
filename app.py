@@ -17,7 +17,6 @@ analyze = False
 import os
 os.environ["STREAMLIT_WATCHER_TYPE"] = "none"
 
-
 # Streamlit App
 st.set_page_config(page_title="Bank Statement Analyzer", layout="wide")
 st.title("🧾 Bank Statement Analyzer")

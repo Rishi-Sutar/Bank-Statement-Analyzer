@@ -3,11 +3,14 @@ from src.prompt_engineering.schema import DataExtractor, AnomalyDetection, Finan
 
 from langchain_google_genai import ChatGoogleGenerativeAI
 import dotenv
+import streamlit as st
 import os   
+
+api_key = st.secrets["GOOGLE_API_KEY"]
 
 dotenv.load_dotenv()
 
-llm = ChatGoogleGenerativeAI(model="gemini-1.5-flash")
+llm = ChatGoogleGenerativeAI(model="gemini-1.5-flash", api_key =api_key)
 
 data_extractor_llm = llm.with_structured_output(DataExtractor)
 anomaly_detector_llm = llm.with_structured_output(AnomalyDetection)
