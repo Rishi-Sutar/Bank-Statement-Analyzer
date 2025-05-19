@@ -49,7 +49,13 @@ with st.sidebar:
 
 if uploaded_file and analyze:
     try:
-        logging.info("File uploaded: %s", uploaded_file.name)
+        if not extracted_text or not extracted_text.strip():
+            st.error("No text could be extracted from the uploaded file. Please upload a valid bank statement.")
+            logging.error("No text extracted from file.")
+            st.stop()
+
+        logging.info("Invoking graph with input: %s", extracted_text[:500])
+
         with st.spinner("Running LangGraph for extraction and analysis..."):
             result = graph.invoke({"input": extracted_text})
         logging.info("Graph analysis completed.")
